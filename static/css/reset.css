@@ -1,0 +1,118 @@
+html{
+  background-color: #eee;
+}
+ul,
+ol,
+body,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body,
+span,
+i {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: #999;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #333;
+}
+
+span,
+i {
+  font-style: normal;
+}
+
+.f-fl {
+  float: left;
+}
+
+.f-fr {
+  float: right;
+}
+
+.f-cf:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.f-pa {
+  position: absolute;
+}
+
+.f-pr {
+  position: relative;
+}
+
+.f-pf {
+  position: fixed;
+}
+
+.f-oh {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.f-lazy {
+  background-image: url('../img/loading.gif');
+  background-color: rgba(0, 0, 0, .2);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.g-nav {
+  display: block;
+  height: 50px;
+  margin-bottom: 30px;
+}
+
+.g-content {
+  display: block;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.g-siderbar {
+  float: left;
+  width: 300px;
+  min-height: 1px;
+  margin-left: 20px;
+}
+
+.g-main {
+  float: left;
+  width: 880px;
+  min-height: 1px;
+}
+
+.g-footer {
+  margin-top: 30px;
+}

@@ -1,0 +1,167 @@
+<template>
+  <ol class="m-pager f-cf" @click.stop="go($event)">
+    <li class="page previous" :class="{'z-disable': cur <= 1}">&lt;上一页</li>
+
+    <li class="page" v-for="val in halfLong" v-if="cur <= halfLong && val < cur" :data-val="val" :key="val">{{val}}</li>
+    <li class="page" v-else-if="cur > halfLong" :data-val="cur - halfLong + val - 1" :key="cur - halfLong + val - 1">{{cur - halfLong + val - 1}}</li>
+    <li class="page z-active" :data-val="cur">{{cur}}</li>
+    <li class="page" v-for="val in halfLong" v-if="cur + val <= tot" :data-val="cur + val" :key="cur + val">{{cur + val}}</li>
+    <li class="page next" :class="{'z-disable': cur >= tot}">下一页&gt;</li>
+    <li class="intro">
+      共{{tot}}页，
+      <form class="jump_form" @submit.prevent="jump2target(target)" @click.stop="()=>{}">
+        到第<input class="jump_input" type="text" v-model="target">页
+        <button class="jump_btn" type="submit">确定</button>
+      </form>
+    </li>
+  </ol>
+</template>
+
+<script>
+export default {
+  props: {
+    current: {
+      default: 1
+    },
+    total: {
+      default: 10
+    },
+    long: {
+      default: 3
+    },
+    pageSize: {
+      default: 10
+    }
+  },
+  computed: {
+    halfLong() {
+      return Math.floor(this.long / 2);
+    }
+  },
+  created() {
+    this.cur = this.current;
+    this.tot = this.total;
+    this.$on('pagechange', () => {
+      console.log('load');
+    });
+  },
+  data: () => {
+    return {
+      cur: 1,
+      tot: 1,
+      target: undefined
+    };
+  },
+  watch: {
+    cur(to, from) {
+      this.$emit('pagechange');
+    }
+  },
+  methods: {
+    go(e) {
+      let target = e.target;
+      switch (target.className) {
+        case 'page':
+          let index = target.getAttribute('data-val');
+          this.jump2target(index);
+          break;
+        case 'page next':
+          this.jump2target(this.cur + 1);
+          break;
+        case 'page previous':
+          this.jump2target(this.cur - 1);
+          break;
+        default:
+          break;
+      }
+    },
+    jump2target(index) {
+      index = parseInt(index);
+      if (typeof index !== 'number' || isNaN(index)) {
+        return;
+      }
+      if (index <= 0 || index > this.total) {
+        console.error(`${index} is  a invalid page number.`);
+        return;
+      }
+      this.cur = index;
+    }
+  }
+};
+</script>
+
+<style scoped>
+.m-pager {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+.m-pager li {
+  min-height: 35px;
+  min-width: 35px;
+  float: left;
+  line-height: 35px;
+  text-align: center;
+  user-select: none;
+}
+.m-pager li + li {
+  margin-left: 5px;
+}
+.m-pager .page {
+  border: 1px solid #666;
+  border-radius: 3px;
+  color: #666;
+  cursor: pointer;
+  transition: all 100ms;
+}
+.m-pager .page:hover {
+  font-weight: bold;
+  border: 1px solid rgb(43, 168, 226);
+  color: rgb(43, 168, 226);
+}
+.m-pager .page.z-active {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px transparent solid;
+  cursor: default;
+}
+.m-pager .page.z-disable {
+  color: #ccc;
+  border: 1px #ccc solid;
+  cursor: not-allowed;
+}
+.m-pager .page.z-disable:hover {
+  font-weight: normal;
+}
+.m-pager .previous,
+.m-pager .next {
+  padding: 0 5px;
+}
+.m-pager .intro {
+  color: #999;
+}
+.m-pager .intro .jump_form {
+  display: inline;
+}
+.m-pager .intro .jump_btn {
+  margin-left: 5px;
+  padding: 0 3px;
+  color: #666;
+  border: 1px #999 solid;
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
+  outline: 0;
+}
+.m-pager .intro .jump_btn:active {
+  background-color: #ddd;
+}
+.m-pager .intro .jump_input {
+  width: 30px;
+  border: 0 transparent solid;
+  border-bottom: 1px #333 solid;
+  background-color: transparent;
+  outline: 0;
+  text-align: center;
+}
+</style>
