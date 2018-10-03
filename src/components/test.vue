@@ -1,44 +1,19 @@
-<template>
-<div class="m-comtentbox f-pr">
-  <div class="title" @click="toggle">
-      {{title}}
-  </div>
-  <div class="content" :class="{toggle:toggled}">
-    <slot></slot>
-  </div>
-</div>  
-</template>
+ <template>
+   <Modal>
+     <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur vero a atque quaerat perferendis at, dolores voluptatibus neque, quod maxime ratione tempore inventore error soluta fugiat illum. Mollitia, iure quibusdam.</div>
+   </Modal>
+ </template>
 
-<script>
-export default {
-  props: ['title'],
-  data: ()=>{
-    return {
-      toggled: false
-    }
-  },
-  methods: {
-    toggle(){
-      this.toggled = !this.toggled;
-    }
-  }
-}
-</script>
+ <script>
+ import Modal from "./modal";
+ export default {
+   components: { Modal }
+ }
+ </script>
 
-<style scoped>
-  .m-comtentbox .title {
-    padding: 10px 3px;
-    background-color: #fff;
-    font-weight: bold;
-  }
-  .m-comtentbox .content {
-    padding: 10px;
-    background: #ddd;
-    overflow: hidden;
-  }
-  .m-comtentbox .toggle {
-    height: 0;
-    padding: 0;
-  }
-</style>
-
+ <style scoped>
+ 
+ </style>
+ 
+ 
+ 

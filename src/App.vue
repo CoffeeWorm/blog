@@ -25,7 +25,7 @@
 import Navigator from './components/navigator';
 import Footer from './components/footer';
 import router from '@/router/router.js';
-import ToggleBox from '@/components/test';
+import ToggleBox from '@/components/togglebox';
 
 export default {
   name: 'App',

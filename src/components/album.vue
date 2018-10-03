@@ -1,51 +1,73 @@
 <template>
-  <div class="m-album f-cf">
+  <div class="m-album f-cf" @click.stop="showDetail($event)">
     <div class="item f-lazy" v-for="item in albumList" :key="item.src">
       <img class="img" :data-src="item.src" :src="item.src">
     </div>
     <div class="item more" v-if="manager">
       <i class="u-icon u-icon-more" title="添加/删除"></i>
     </div>
+    <Modal class="modal" v-if="showImg" @onclose="modalClose" v-bind="params">
+      <img v-if="imgSrc" :src="imgSrc" alt="">
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './modal';
 export default {
+  components: { Modal },
+  methods: {
+    showDetail(e) {
+      let target = e.target;
+      console.log(e, target);
+      let src = target.getAttribute('data-src');
+      this.imgSrc = src;
+      this.showImg = !0;
+    },
+    modalClose() {
+      this.showImg = false;
+    }
+  },
   data: function() {
     return {
-      manager: false,
+      imgSrc: '',
+      manager: !1,
+      showImg: !1,
+      params: {
+        close: false,
+        know: false
+      },
       albumList: [
         {
-          src: "https://dummyimage.com/439x439/c00/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/c00/fff',
+          intro: 'this is a img',
           show: false
         },
         {
-          src: "https://dummyimage.com/439x439/cc0/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/cc0/fff',
+          intro: 'this is a img',
           show: false
         },
         {
-          src: "https://dummyimage.com/439x439/c0c/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/c0c/fff',
+          intro: 'this is a img',
           show: false
         },
         {
-          src: "https://dummyimage.com/439x439/0c0/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/0c0/fff',
+          intro: 'this is a img',
           show: false
         },
         {
-          src: "https://dummyimage.com/439x439/0cc/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/0cc/fff',
+          intro: 'this is a img',
           show: false
         },
         {
-          src: "https://dummyimage.com/439x439/00c/fff",
-          intro: "this is a img",
+          src: 'https://dummyimage.com/439x439/00c/fff',
+          intro: 'this is a img',
           show: false
-        },
-        
+        }
       ]
     };
   }
@@ -74,6 +96,8 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 50px;
+  height: 50px;
   transform: translate3d(-50%, -50%, 0);
 }
 .m-album .item.more:hover {
@@ -91,41 +115,8 @@ export default {
   transition: all 300ms;
   display: block;
 }
-.u-icon {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
-.u-icon-more {
-  width: 50px;
-  height: 50px;
-  border: 2px solid #fff;
-  transition: border 300ms;
-}
-.u-icon-more:before,
-.u-icon-more:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 15px;
-  height: 2px;
-  transition: background-color 300ms;
-  background-color: #fff;
-}
-.u-icon-more:hover {
-  border: 2px solid #333;
-}
-.u-icon-more:hover:before,
-.u-icon-more:hover:after {
-  background-color: #333;
-}
-.u-icon-more:before {
-  transform: translate3d(-50%, -50%, 0) rotate(90deg);
-}
-.u-icon-more:after {
-  transform: translate3d(-50%, -50%, 0);
+.m-album .modal>>>.m-modal {
+  padding: 0;
+  background: transparent;
 }
 </style>

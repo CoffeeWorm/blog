@@ -5,7 +5,9 @@ import article from '@/components/article';
 import resume from '@/components/resume';
 import notFound from '@/components/404';
 import more from '@/components/more';
-import event from '@/components/event.js'
+import event from '@/components/event.js';
+import test from '@/components/test';
+
 
 Vue.use(Router);
 let routes = [{
@@ -30,6 +32,11 @@ let routes = [{
     path: '/404',
     name: '404',
     component: notFound
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
   },
   {
     path: '/more',
