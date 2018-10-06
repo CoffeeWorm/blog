@@ -1,14 +1,14 @@
 <template>
-  <div class="f-full">
+  <div class="f-full" @click="clickHanlder($event)">
     <div class="m-modal">
-      <i class="u-icon u-icon-close" @click.stop="_onclose"></i>
+      <i class="fa fa-times"></i>
       <p class="title" v-if="title">{{title}}</p>
       <div class="container">
         <slot></slot>
       </div>
       <div class="btnaera">
-        <button class="u-btn know" v-if="know" @click.stop="_onknow">{{know}}</button>
-        <button class="u-btn close" v-if="close" @click.stop="_onclose">{{close}}</button>
+        <button class="u-btn know" v-if="know">{{know}}</button>
+        <button class="u-btn close" v-if="close">{{close}}</button>
         <button class="u-btn" v-for="item in customBtn" :key="item.content" v-if="customBtn" @click.stop="item.event">{{item.content}}</button>
       </div>
     </div>
@@ -25,7 +25,7 @@ export default {
       default: '知道了'
     },
     customBtn: {
-      default: ()=>[]
+      default: () => []
     },
     content: {
       default: ''
@@ -38,17 +38,26 @@ export default {
     return {};
   },
   methods: {
-    _onclose() {
-      this.$emit('onclose');
-    },
-    _onknow() {
-      this.$emit('onknow');
+    clickHanlder(e) {
+      e.stopPropagation();
+      let target = e.target;
+      switch (target.className) {
+        case 'u-btn know':
+          this.$emit('onknow');
+          break;
+        case 'fa fa-times':
+        case 'u-btn close':
+          this.$emit('onclose');
+          break;
+        default:
+          break;
+      }
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .f-full {
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.7);
@@ -68,19 +77,27 @@ export default {
   border-bottom: 1px solid #666;
 }
 .m-modal .container {
+  position: relative;
   padding: 7px;
 }
 .m-modal .btnaera {
-  margin: 0 0 10px;;
-  text-align: center;  
+  margin: 0 0 10px;
+  text-align: center;
 }
-.m-modal .btnaera .u-btn+.u-btn{
+.m-modal .btnaera .u-btn + .u-btn {
   margin-left: 15px;
 }
-.m-modal .u-icon-close {
+.m-modal .fa.fa-times {
   position: absolute;
-  top: 0;
-  right: 0;
-  border-width: 0px;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 200ms;
+}
+.m-modal .fa:hover {
+  color: #fff;
 }
 </style>

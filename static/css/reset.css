@@ -1,5 +1,5 @@
 html {
-  background-color: #eee;
+  background-color: #f6f6f6;
 }
 ul,
 ol,
@@ -123,77 +123,6 @@ i {
 
 .g-footer {
   margin-top: 30px;
-}
-
-.u-icon {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  font-size: 0;
-  line-height: 0;
-}
-
-.u-icon-close {
-  border: 1px solid #333;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.u-icon-close::before,
-.u-icon-close::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  height: 2px;
-  border-radius: 1px;
-  background-color: #333;
-}
-
-.u-icon-close::before {
-  transform: translate3d(-50%, -50%, 0) rotate(45deg);
-}
-
-.u-icon-close::after {
-  transform: translate3d(-50%, -50%, 0) rotate(-45deg);
-}
-
-.u-icon-more {
-  width: 50px;
-  height: 50px;
-  border: 2px solid #fff;
-  transition: border 300ms;
-}
-
-.u-icon-more:before,
-.u-icon-more:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 15px;
-  height: 2px;
-  transition: background-color 300ms;
-  background-color: #fff;
-}
-
-.u-icon-more:hover {
-  border: 2px solid #333;
-}
-
-.u-icon-more:hover:before,
-.u-icon-more:hover:after {
-  background-color: #333;
-}
-
-.u-icon-more:before {
-  transform: translate3d(-50%, -50%, 0) rotate(90deg);
-}
-
-.u-icon-more:after {
-  transform: translate3d(-50%, -50%, 0);
 }
 
 .u-btn {
