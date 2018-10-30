@@ -1,7 +1,8 @@
 <template>
   <div class="m-article">
+    <ArticleCard class="articlecard" v-for="item in articleTopList" :key="item.id" v-bind="item"></ArticleCard>
     <ArticleCard class="articlecard" v-for="item in articleList" :key="item.id" v-bind="item"></ArticleCard>
-    <Pager class="pager" @pagechange="loadPage" :long="10"></Pager>
+    <Pager class="pager" @pagechange="loadPage($event)"></Pager>
   </div>
 </template>
 
@@ -10,20 +11,16 @@ import Pager from './pager';
 import ArticleCard from './article_intro';
 export default {
   components: { Pager, ArticleCard },
-  methods:{
-    loadPage(){
-      this.current+=1;
-      this.articleList.forEach(item=>{
-       item.title += this.current;
-        console.log(item);
-      });
-      console.log(this.current);
+  methods: {
+    loadPage(e) {
+      this.current = e.to;
     }
   },
   data: () => {
     return {
       current: 1,
       pageSize: 10,
+      articleTopList: [],
       articleList: [
         {
           title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
@@ -101,7 +98,7 @@ export default {
           id: '1239',
           url: '/asdasg',
           top: !0
-        },
+        }
       ]
     };
   }

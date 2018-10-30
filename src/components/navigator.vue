@@ -5,7 +5,7 @@
     </div>
     <ul class="f-fr f-pr">
       <li v-for="(it, index ) in navList" class="item active" :key="it.link" ref="j-navitem" @mouseover="onMousrHover(index)" @mouseout="onMousrLeave()">
-        <router-link :to="it.link" >{{it.name}}</router-link>
+        <router-link :to="it.link">{{it.name}}</router-link>
       </li>
       <li class="decoratebar f-pa" :style="{width:barWidth+'px',left:barLeft+'px'}"></li>
     </ul>
@@ -29,7 +29,7 @@ export default {
       if (this.active === -1) {
         this.barWidth = 0;
         this.barLeft = 0;
-      }else{
+      } else {
         this.barWidth = this.navList[this.active].width;
         this.barLeft = this.navList[this.active].left;
       }
@@ -51,8 +51,8 @@ export default {
   },
   mounted() {
     for (let i = this.navList.length - 1; i >= 0; i--) {
-      this.navList[i].width = this.$refs["j-navitem"][i].offsetWidth;
-      this.navList[i].left = this.$refs["j-navitem"][i].offsetLeft;
+      this.navList[i].width = this.$refs['j-navitem'][i].offsetWidth;
+      this.navList[i].left = this.$refs['j-navitem'][i].offsetLeft;
     }
     this.setDefault();
     this.onMousrLeave();
@@ -82,7 +82,7 @@ export default {
   float: left;
   padding: 0 15px;
   font-size: 18px;
-  font-family: "Microsoft YaHei";
+  font-family: 'Microsoft YaHei';
   line-height: 50px;
   text-decoration: none;
 }

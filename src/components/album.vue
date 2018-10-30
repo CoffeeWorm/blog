@@ -54,7 +54,7 @@ export default {
       };
       switch (target.className) {
         case 'fa fa-angle-right':
-          jump(+1); 
+          jump(+1);
           break;
         case 'fa fa-angle-left':
           jump(-1);
@@ -63,6 +63,19 @@ export default {
           break;
       }
     }
+  },
+  mounted() {
+    //mock data
+    let one = {
+      src: 'https://dummyimage.com/439x439/c00/fff',
+      intro: 'this is a img',
+      show: false
+    };
+    let arr = [];
+    for (let i = 0; i < 10; i++) {
+      arr.push(one);
+    }
+    this.albumList = arr;
   },
   data() {
     return {
@@ -73,38 +86,7 @@ export default {
         close: false,
         know: false
       },
-      albumList: [
-        {
-          src: 'https://dummyimage.com/439x439/c00/fff',
-          intro: 'this is a img',
-          show: false
-        },
-        {
-          src: 'https://dummyimage.com/439x439/cc0/fff',
-          intro: 'this is a img',
-          show: false
-        },
-        {
-          src: 'https://dummyimage.com/439x439/c0c/fff',
-          intro: 'this is a img',
-          show: false
-        },
-        {
-          src: 'https://dummyimage.com/439x439/0c0/fff',
-          intro: 'this is a img',
-          show: false
-        },
-        {
-          src: 'https://dummyimage.com/439x439/0cc/fff',
-          intro: 'this is a img',
-          show: false
-        },
-        {
-          src: 'https://dummyimage.com/439x439/00c/fff',
-          intro: 'this is a img',
-          show: false
-        }
-      ]
+      albumList: []
     };
   }
 };
@@ -119,9 +101,10 @@ export default {
   width: 439px;
   height: 439px;
   margin-left: 2px;
-  margin-top: 2px;
+  margin-bottom: 2px;
   float: left;
   transition: background-color 300ms;
+  border-radius: 3px;
   cursor: pointer;
   overflow: hidden;
 }

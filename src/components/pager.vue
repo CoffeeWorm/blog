@@ -2,10 +2,12 @@
   <ol class="m-pager f-cf" @click.stop="go($event)">
     <li class="page previous" :class="{'z-disable': cur <= 1}">&lt;上一页</li>
 
-    <li class="page" v-for="val in halfLong" v-if="cur <= halfLong && val < cur" :data-val="val" :key="val">{{val}}</li>
-    <li class="page" v-else-if="cur > halfLong" :data-val="cur - halfLong + val - 1" :key="cur - halfLong + val - 1">{{cur - halfLong + val - 1}}</li>
+    <li class="page" v-for="val in size" v-if="beforeCondition(val)" :data-val="beforeVal(val)" :key="val">{{beforeVal(val)}}</li>
+
     <li class="page z-active" :data-val="cur">{{cur}}</li>
-    <li class="page" v-for="val in halfLong" v-if="cur + val <= tot" :data-val="cur + val" :key="cur + val">{{cur + val}}</li>
+
+    <li class="page" v-for="val in size" v-if="afterCondition(val)" :data-val="afterVal(val)" :key="val">{{afterVal(val)}}</li>
+
     <li class="page next" :class="{'z-disable': cur >= tot}">下一页&gt;</li>
     <li class="intro">
       共{{tot}}页，
@@ -24,26 +26,20 @@ export default {
       default: 1
     },
     total: {
-      default: 10
+      default: 100
     },
-    long: {
-      default: 3
-    },
-    pageSize: {
+    size: {
       default: 10
     }
   },
   computed: {
-    halfLong() {
-      return Math.floor(this.long / 2);
+    half() {
+      return Math.floor(this.size / 2);
     }
   },
   created() {
     this.cur = this.current;
     this.tot = this.total;
-    this.$on('pagechange', () => {
-      console.log('load');
-    });
   },
   data: () => {
     return {
@@ -54,7 +50,7 @@ export default {
   },
   watch: {
     cur(to, from) {
-      this.$emit('pagechange');
+      this.$emit('pagechange', { from, to });
     }
   },
   methods: {
@@ -85,6 +81,34 @@ export default {
         return;
       }
       this.cur = index;
+    },
+    beforeVal(val) {
+      return this.cur + val - this.size;
+    },
+    beforeCondition(val) {
+      let res = !1;
+      let value = this.beforeVal(val);
+      if (this.cur <= this.half) {
+        res = 0 < value && value < this.cur;
+      } else if (this.cur < this.tot - this.half) {
+        res = this.beforeVal(this.half) < value && value < this.cur;
+      } else {
+        res = this.tot - this.size < value && value < this.cur;
+      }
+      return res;
+    },
+    afterVal(val) {
+      return this.cur + val;
+    },
+    afterCondition(val) {
+      let res = !1;
+      let value = this.afterVal(val);
+      if (this.cur <= this.half) {
+        res = value <= this.tot && value <= this.size;
+      } else {
+        res = value <= this.half + this.cur && value <= this.tot;
+      }
+      return res;
     }
   }
 };
@@ -114,7 +138,6 @@ export default {
   transition: all 100ms;
 }
 .m-pager .page:hover {
-  font-weight: bold;
   border: 1px solid rgb(43, 168, 226);
   color: rgb(43, 168, 226);
 }

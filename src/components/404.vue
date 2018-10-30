@@ -6,8 +6,7 @@
   </div>
 </template>
 <script>
-export default {
-};
+export default {};
 </script>
 <style>
 .errmsg {
@@ -21,5 +20,3 @@ export default {
   vertical-align: middle;
 }
 </style>
-
-

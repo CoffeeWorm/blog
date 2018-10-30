@@ -6,13 +6,11 @@
 
 <script>
 export default {
-  data: ()=>{
-    return {abc: 'this is more'};
-  },
-
-}
+  data: () => {
+    return { abc: '敬请期待~' };
+  }
+};
 </script>
 
 <style>
-
 </style>

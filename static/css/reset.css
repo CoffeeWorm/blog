@@ -1,6 +1,12 @@
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 html {
   background-color: #f6f6f6;
 }
+
 ul,
 ol,
 body,

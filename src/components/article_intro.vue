@@ -19,15 +19,15 @@
 </template>
 <script>
 export default {
-  props:['title', 'intro',  'auther', 'pubTime', 'readers', 'id', 'url', 'top'],
-}
+  props: ['title', 'intro', 'auther', 'pubTime', 'readers', 'id', 'url', 'top']
+};
 </script>
 
 <style scoped>
 .m-article {
   padding: 5px 15px;
   background-color: #fff;
-  box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.2);
+  box-shadow: 2px 2px 10px rgba(50, 50, 50, 0.3);
   border-radius: 3px;
   text-align: left;
 }
@@ -55,5 +55,3 @@ export default {
   margin-left: 20px;
 }
 </style>
-
-
