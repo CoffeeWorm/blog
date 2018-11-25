@@ -35,14 +35,10 @@
           </template>
         </ToggleBox>
 
-        <ToggleBox class="intro-box rec_article">
+        <ToggleBox class="intro-box rec_album">
           <p slot="title"><i class="fa fa-camera"></i> 相册照片</p>
-          <template slot="comnten">
-            <ol>
-              <li class="recommend f-oh" v-for="rec in recList" :key="rec.title">
-                <a :href="rec.src">{{rec.title}}</a>
-              </li>
-            </ol>
+          <template slot="content">
+            <Banner class="banner" :imgList="imgList"></Banner>
           </template>
         </ToggleBox>
       </div>
@@ -55,10 +51,11 @@ import Navigator from './components/navigator';
 import Footer from './components/footer';
 import router from '@/router/router.js';
 import ToggleBox from '@/components/togglebox';
+import Banner from '@/components/banner';
 
 export default {
   name: 'App',
-  components: { Navigator, Footer, ToggleBox },
+  components: { Navigator, Footer, ToggleBox, Banner },
   data: () => {
     return {
       title: 'This is title',
@@ -80,6 +77,24 @@ export default {
         {
           title: 'RegExp正则表达式速查表',
           src: ''
+        }
+      ],
+      imgList: [
+        {
+          src: 'https://dummyimage.com/270x150/cdf/fff',
+          name: ''
+        },
+        {
+          src: 'https://dummyimage.com/270x150/c49/fff',
+          name: ''
+        },
+        {
+          src: 'https://dummyimage.com/270x150/346/fff',
+          name: ''
+        },
+        {
+          src: 'https://dummyimage.com/270x150/890/fff',
+          name: ''
         }
       ]
     };
@@ -152,5 +167,16 @@ export default {
 }
 .rec_article .recommend a {
   color: #333;
+}
+.rec_album .content .banner {
+  width: 270px;
+  height: 150px;
+}
+.rec_album .content .banner .left,
+.rec_album .content .banner .right {
+  font-size: 30px;
+}
+.rec_album .content .banner .pointers {
+  font-size: 12px;
 }
 </style>
