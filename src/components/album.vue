@@ -1,15 +1,20 @@
 <template>
   <div class="m-album f-cf" @click.stop="showDetail($event)">
-    <div class="item f-lazy" v-for="item in albumList" :key="item.src">
-      <img class="img" :data-src="item.src" :src="item.src">
-    </div>
-    <div class="item more" v-if="manager">
-      <i class="fa fa-plus" title="添加/删除"></i>
+    <div class="item f-lazy" v-for="item in albumList" :key="item.id">
+      <img class="img" :src="item.path" :data-id="item.id">
+      <div class="layer">
+        <div class="intro">
+          <p class="location">Shot in {{item.location}}</p>
+          <p class="device">By {{item.device}}</p>
+          <p class="date">{{item.date | time}}</p>
+        </div>
+      </div>
+      <div class="cover" :data-id="item.id"></div>
     </div>
     <Modal class="modal" v-if="showImg" @onclose="modalClose" v-bind="params">
       <div @click.stop="switchImg($event)">
         <i class="fa fa-angle-left"></i>
-        <img class="detail" v-if="imgSrc" :src="imgSrc" alt="" ref="j-imgdetail">
+        <img class="detail" :src="albumList[currentImdIndex].path">
         <i class="fa fa-angle-right"></i>
       </div>
     </Modal>
@@ -17,46 +22,44 @@
 </template>
 
 <script>
-import Modal from './modal';
+import Modal from "./modal";
+import cache from "./cache";
 export default {
   components: { Modal },
   methods: {
     showDetail(e) {
-      e.stopPropagation();
       let target = e.target;
       switch (target.className) {
-        case 'img':
-          let src = target.getAttribute('data-src');
-          this.imgSrc = src;
-          this.showImg = !0;
+        case "cover":
+          let id = target.getAttribute("data-id");
+          this.currentImdIndex = this.findindex(id);
+          this.showImg = true;
           break;
         default:
           break;
       }
+    },
+    findindex(id) {
+      return this.albumList.findIndex(item => {
+        return item.id == id;
+      });
     },
     modalClose() {
       this.showImg = false;
     },
     switchImg(e) {
       let target = e.target;
-      let dom = this.$refs['j-imgdetail'];
-      let findindex = src => {
-        return this.albumList.findIndex(item => {
-          return item.src === dom.src;
-        });
-      };
-      let jump = (slope) => {
-        let index = findindex(dom.src);
+      let jump = slope => {
         let len = this.albumList.length;
-        index = (index + slope * 1) % len;
+        let index = (this.currentImdIndex + slope * 1) % len;
         index = index < 0 ? len + index : index;
-        dom.src = this.albumList[index].src;
+        this.currentImdIndex = index;
       };
       switch (target.className) {
-        case 'fa fa-angle-right':
+        case "fa fa-angle-right":
           jump(+1);
           break;
-        case 'fa fa-angle-left':
+        case "fa fa-angle-left":
           jump(-1);
           break;
         default:
@@ -65,26 +68,26 @@ export default {
     }
   },
   mounted() {
-    //mock data
-    let one = {
-      src: 'https://dummyimage.com/439x439/c00/fff',
-      intro: 'this is a img',
-      show: false
-    };
-    let arr = [];
-    for (let i = 0; i < 10; i++) {
-      arr.push(one);
-    }
-    this.albumList = arr;
+    this.$cache
+      .get("/api/photo/getList", {
+        params: {
+          page: 1,
+          pageSize: 10
+        }
+      })
+      .then(res => {
+        this.albumList = res;
+      });
   },
   data() {
     return {
-      imgSrc: '',
+      currentImdIndex: "",
       manager: !1,
       showImg: !1,
       params: {
         close: false,
-        know: false
+        know: false,
+        customBtn: false
       },
       albumList: []
     };
@@ -99,7 +102,7 @@ export default {
 .m-album .item {
   position: relative;
   width: 439px;
-  height: 439px;
+  height: 293px;
   margin-left: 2px;
   margin-bottom: 2px;
   float: left;
@@ -108,23 +111,6 @@ export default {
   cursor: pointer;
   overflow: hidden;
 }
-.m-album .item.more {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.m-album .item.more .fa {
-  display: block;
-  text-align: center;
-  font-size: 50px;
-  line-height: 439px;
-  color: #000;
-  transition: color 100ms ease-in-out;
-}
-.m-album .item.more .fa:hover {
-  color: #fff;
-}
-.m-album .item.more:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-}
 .m-album .item:hover .img {
   transform: translate3d(-50%, -50%, 0) scale3d(1.1, 1.1, 1);
 }
@@ -132,31 +118,65 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  max-width: 800px;
+  max-width: 600px;
   transform: translate3d(-50%, -50%, 0);
   transition: all 300ms;
   display: block;
 }
+.m-album .item .layer,
+.m-album .item .cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transition: all 300ms ease-in-out;
+}
+.m-album .item:hover .layer {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.m-album .item:hover .intro {
+  opacity: 1;
+}
+.m-album .item .intro {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  height: 60%;
+  padding-top: 60px;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  opacity: 0;
+  transition: all 300ms ease-in-out;
+  transform: translate(-50%, -50%);
+}
 .m-album .modal >>> .m-modal,
 .m-album .modal >>> .container {
+  max-width: 900px;
   padding: 0;
+  font-size: 0;
+  line-height: 0;
   background: transparent;
 }
 .m-album .modal .fa.fa-angle-left,
 .m-album .modal .fa.fa-angle-right {
   position: absolute;
-  top: 40%;
-  opacity: 0.2;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.3;
   font-size: 80px;
   color: #fff;
   transition: 200ms color;
   cursor: pointer;
 }
 .m-album .modal .fa.fa-angle-left {
-  left: 0;
+  left: -40px;
 }
 .m-album .modal .fa.fa-angle-right {
-  right: 0;
+  right: -40px;
 }
 .m-album .modal .fa.fa-angle-left:hover,
 .m-album .modal .fa.fa-angle-right:hover {

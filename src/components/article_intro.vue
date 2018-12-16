@@ -1,25 +1,24 @@
 <template>
   <div class="m-article f-cf">
     <p class="title">
-      <a :href="url+id" target="_blank">
-        <span class="top" v-show="top">[顶]</span>
+      <a :href="path" target="_self">
+        <span class="top" v-show="isAd">[推广]</span>
+        <span class="top" v-show="isTop">[顶]</span>
         {{title}}
       </a>
     </p>
     <p class="intro">
       {{intro}}
-      <a class="more" href="#" target="_self">更多...</a>
+      <a class="more" href="#" target="_self">More...</a>
     </p>
     <div class="info">
-      <span class="auther">作者：{{auther}}</span>
-      <span class="time">{{pubTime|time}}</span>
-      <span class="readers">阅读数：{{readers}}</span>
+      <span class="time">{{createTime|time}}</span>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['title', 'intro', 'auther', 'pubTime', 'readers', 'id', 'url', 'top']
+  props: ['title', 'intro', 'createTime', 'views', 'id', 'isTop', 'isAd', 'path']
 };
 </script>
 
@@ -36,6 +35,13 @@ export default {
   font-size: 18px;
   font-weight: bold;
   line-height: 2.5;
+  cursor: pointer;
+}
+.m-article .title a {
+  color: #333;
+}
+.m-article .title a:hover {
+  color: rgb(255, 133, 0);
 }
 .m-article .title .top {
   font-size: 18px;
@@ -45,6 +51,9 @@ export default {
   font-size: 16px;
   text-indent: 2em;
   line-height: 1.4;
+}
+.m-article .intro .more{
+  font-size: 14px;
 }
 .m-article .info {
   float: right;

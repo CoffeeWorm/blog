@@ -5,7 +5,7 @@
         v-for="(img, idx) in imgList" 
         :class="{'z-active': isCurrent(idx), movenextin: isNextIn(idx), movebackin: isBackIn(idx), movenextout: isNextOut(idx), movebackout: isBackOut(idx)}" 
         :key="idx">
-        <img class="img" :src="img.src" :alt="img.name">
+        <img class="img" :src="img.path" :alt="img.name">
       </li>
     </ul>
     <i class="fa fa-angle-left left" ref="back"></i>
@@ -30,7 +30,7 @@ export default {
     imgList: {
       type: Array,
       default: function() {
-        return [{ src: '', name: '' }];
+        return [{ path: '', name: '' }];
       }
     }
   },

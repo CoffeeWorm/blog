@@ -23,12 +23,15 @@
 export default {
   props: {
     current: {
+      type: Number,
       default: 1
     },
     total: {
-      default: 100
+      type: Number,
+      default: 1
     },
     size: {
+      type: Number,
       default: 10
     }
   },

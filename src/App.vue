@@ -12,20 +12,26 @@
           <template slot="content">
             <div class="face f-cb">
               <div class="avatar">
-                <img class="avatar_img" src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1197039898,3476709019&fm=179&app=42&f=JPEG?w=121&h=140" alt="">
+                <img class="avatar_img" :src="personalInfo.avatar" alt>
               </div>
             </div>
             <div class="content">
-              <p class="name">Coffee_Worm</p>
-              <p class="profession">web前端工程师</p>
-              <p class="intro">坐标杭州滨江，即将从计算机科学与技术专业毕业，初入IT行业，从事web前端开发工作。</p>
+              <p class="name">{{personalInfo.name}}</p>
+              <p class="location">
+                <i class="fa fa-map-marker"></i>
+                {{personalInfo.city}}
+              </p>
+              <p class="profession">{{personalInfo.profession}}</p>
+              <p class="intro">{{personalInfo.intro}}</p>
             </div>
             <div class="status"></div>
           </template>
         </ToggleBox>
 
         <ToggleBox class="intro-box rec_article">
-          <p slot="title"><i class="fa fa-list"></i> 置顶文章</p>
+          <p slot="title">
+            <i class="fa fa-list"></i> 置顶文章
+          </p>
           <template slot="content">
             <ol>
               <li class="recommend f-oh" v-for="rec in recList" :key="rec.title">
@@ -36,7 +42,9 @@
         </ToggleBox>
 
         <ToggleBox class="intro-box rec_album">
-          <p slot="title"><i class="fa fa-camera"></i> 相册照片</p>
+          <p slot="title">
+            <i class="fa fa-camera"></i> 相册照片
+          </p>
           <template slot="content">
             <Banner class="banner" :imgList="imgList"></Banner>
           </template>
@@ -47,56 +55,53 @@
   </div>
 </template>
 <script>
-import Navigator from './components/navigator';
-import Footer from './components/footer';
-import router from '@/router/router.js';
-import ToggleBox from '@/components/togglebox';
-import Banner from '@/components/banner';
+import Navigator from "./components/navigator";
+import Footer from "./components/footer";
+import { navList } from "./router/config";
+import router from "./router/router";
+import ToggleBox from "@/components/togglebox";
+import Banner from "@/components/banner";
+import cache from "./components/cache";
 
 export default {
-  name: 'App',
+  name: "App",
   components: { Navigator, Footer, ToggleBox, Banner },
+  mounted() {
+    cache.get("/api/user/info").then(res => {
+      this.personalInfo = res;
+    });
+    cache
+      .get("/api/photo/getList", {
+        params: {
+          page: 1,
+          pageSize: 5,
+          isTop: true
+        }
+      })
+      .then(res => {
+        this.imgList = res;
+      });
+  },
   data: () => {
     return {
-      title: 'This is title',
-      navList: [
-        { link: '/album', name: '我的相册' },
-        { link: '/article', name: '我的日志' },
-        { link: '/resume', name: '个人简介' },
-        { link: '/management', name: '管理中心' }
-      ],
+      title: "This is title",
+      personalInfo: {},
+      navList: navList,
       recList: [
         {
-          title: 'Git命令速查表',
-          src: ''
+          title: "Git命令速查表",
+          src: ""
         },
         {
-          title: 'Git版本回退详解',
-          src: ''
+          title: "Git版本回退详解",
+          src: ""
         },
         {
-          title: 'RegExp正则表达式速查表',
-          src: ''
+          title: "RegExp正则表达式速查表",
+          src: ""
         }
       ],
-      imgList: [
-        {
-          src: 'https://dummyimage.com/270x150/cdf/fff',
-          name: ''
-        },
-        {
-          src: 'https://dummyimage.com/270x150/c49/fff',
-          name: ''
-        },
-        {
-          src: 'https://dummyimage.com/270x150/346/fff',
-          name: ''
-        },
-        {
-          src: 'https://dummyimage.com/270x150/890/fff',
-          name: ''
-        }
-      ]
+      imgList: []
     };
   },
   router
@@ -143,13 +148,19 @@ export default {
   text-align: center;
 }
 .personalintro .content .name {
+  margin-bottom: 5px;
   font-size: 20px;
   font-weight: bold;
 }
 .personalintro .content .profession {
-  line-height: 3;
+  line-height: 2;
   font-size: 16px;
   color: #666;
+}
+.personalintro .content .location {
+  line-height: 1.4;
+  font-size: 14px;
+  color: #999;
 }
 .personalintro .content .intro {
   padding: 0 20px;

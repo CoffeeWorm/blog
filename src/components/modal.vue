@@ -6,7 +6,7 @@
       <div class="container">
         <slot></slot>
       </div>
-      <div class="btnaera">
+      <div class="btnaera" v-if="know || close || customBtn">
         <button class="u-btn know" v-if="know">{{know}}</button>
         <button class="u-btn close" v-if="close">{{close}}</button>
         <button class="u-btn" v-for="item in customBtn" :key="item.content" v-if="customBtn" @click.stop="item.event">{{item.content}}</button>

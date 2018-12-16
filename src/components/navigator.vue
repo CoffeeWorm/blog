@@ -4,8 +4,8 @@
       <span class="logo">Coffee_Worm</span>
     </div>
     <ul class="f-fr f-pr">
-      <li v-for="(it, index ) in navList" class="item active" :key="it.link" ref="j-navitem" @mouseover="onMousrHover(index)" @mouseout="onMousrLeave()">
-        <router-link :to="it.link">{{it.name}}</router-link>
+      <li v-for="(it, index ) in navList" class="item active" :key="it.path" ref="j-navitem" @mouseover="onMousrHover(index)" @mouseout="onMousrLeave()">
+        <router-link :to="it.path">{{it.name}}</router-link>
       </li>
       <li class="decoratebar f-pa" :style="{width:barWidth+'px',left:barLeft+'px'}"></li>
     </ul>
@@ -16,7 +16,15 @@
 import event from './event.js';
 
 export default {
-  props: ['navList'],
+  props: {
+    navList : {
+      type: Array,
+      default: () => ({
+        path: '',
+        name: ''
+      })
+    }
+  },
   data: () => {
     return {
       barWidth: 0,
@@ -36,7 +44,7 @@ export default {
     },
     setDefault(to) {
       for (let i = this.navList.length - 1; i >= 0; i--) {
-        if (new RegExp(this.navList[i].link).test(to || location.hash)) {
+        if (new RegExp(this.navList[i].path).test(to || location.hash)) {
           this.active = i;
           return;
         }
