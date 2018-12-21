@@ -121,6 +121,7 @@ export default {
 .m-pager {
   margin-top: 30px;
   margin-bottom: 0;
+  list-style-type: none;
 }
 .m-pager li {
   min-height: 35px;

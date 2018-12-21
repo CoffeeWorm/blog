@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="g-nav">
-      <Navigator :nav-list="navList"></Navigator>
+      <Navigator :navList="navList"></Navigator>
     </div>
     <div class="g-content f-cf">
       <div class="g-main f-cf">
@@ -33,11 +33,11 @@
             <i class="fa fa-list"></i> 置顶文章
           </p>
           <template slot="content">
-            <ol>
+            <ul>
               <li class="recommend f-oh" v-for="rec in recList" :key="rec.title">
                 <a :href="rec.src">{{rec.title}}</a>
               </li>
-            </ol>
+            </ul>
           </template>
         </ToggleBox>
 
@@ -58,11 +58,9 @@
 import Navigator from "./components/navigator";
 import Footer from "./components/footer";
 import { navList } from "./router/config";
-import router from "./router/router";
 import ToggleBox from "@/components/togglebox";
 import Banner from "@/components/banner";
 import cache from "./components/cache";
-
 export default {
   name: "App",
   components: { Navigator, Footer, ToggleBox, Banner },
@@ -104,7 +102,6 @@ export default {
       imgList: []
     };
   },
-  router
 };
 </script>
 
@@ -174,7 +171,7 @@ export default {
   line-height: 1.5;
   padding-left: 3px;
   list-style-position: inside;
-  list-style-type: decimal;
+  /* list-style-type: decimal; */
 }
 .rec_article .recommend a {
   color: #333;

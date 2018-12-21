@@ -1,5 +1,5 @@
 <template>
-  <div class="m-article">
+  <div class="m-articlelist">
     <ArticleCard class="articlecard" v-for="item in articleAdList" :key="item.id" v-bind="item"></ArticleCard>
     <ArticleCard class="articlecard" v-for="item in articleTopList" :key="item.id" v-bind="item"></ArticleCard>
     <ArticleCard class="articlecard" v-for="item in articleList" :key="item.id" v-bind="item"></ArticleCard>
@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Pager from "./pager";
-import ArticleCard from "./article_intro";
+import Pager from "@/components/pager";
+import ArticleCard from "@/components/article-card";
 
 export default {
   components: { Pager, ArticleCard },
@@ -32,12 +32,12 @@ export default {
     }
   },
   mounted() {
-    this.$cache.get("/api/article/getAdList").then(res => {
-      this.articleAdList = res;
-    });
-    this.$cache.get("/api/article/getTopList").then(res => {
-      this.articleTopList = res;
-    });
+    // this.$cache.get("/api/article/getAdList").then(res => {
+    //   this.articleAdList = res;
+    // });
+    // this.$cache.get("/api/article/getTopList").then(res => {
+    //   this.articleTopList = res;
+    // });
     this.loadPage();
   },
   data: () => ({
@@ -52,13 +52,13 @@ export default {
 </script>
 
 <style scoped>
-.m-article .articlecard + .articlecard {
+.m-articlelist .articlecard + .articlecard {
   margin-top: 20px;
 }
-.m-article {
+.m-articlelist {
   text-align: center;
 }
-.m-article .pager {
+.m-articlelist .pager {
   display: inline-block;
 }
 </style>

@@ -159,6 +159,7 @@ export default {
 }
 .m-banner .imglist .item {
   display: none;
+  list-style-type: none;
 }
 .m-banner .imglist .item.movenextin {
   display: block;
@@ -202,6 +203,7 @@ export default {
   cursor: pointer;
   transition: all 200ms ease-in-out;
   line-height: 0;
+  list-style-type: none;
 }
 .m-banner .pointer .current {
   display: none;

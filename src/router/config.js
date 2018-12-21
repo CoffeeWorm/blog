@@ -1,21 +1,25 @@
-import album from '@/components/album';
-import articleList from '@/components/articleList';
-import resume from '@/components/resume';
-import notFound from '@/components/404';
-import management from '@/components/management';
+import album from '@/pages/album';
+import articleList from '@/pages/articleList';
+import notFound from '@/pages/404';
+import management from '@/pages/management';
+import article from '@/pages/article';
 
 const routes = [{
   path: '/album',
-  name: '我的相册',
+  name: 'album',
   component: album
 }, {
   path: '/articleList',
-  name: '我的日志',
+  name: 'articleList',
   component: articleList
 }, {
   path: '/management',
-  name: '管理中心',
+  name: 'management',
   component: management
+}, {
+  path: '/article',
+  name: 'article',
+  component: article
 }, {
   path: '/404',
   name: '404',
@@ -27,14 +31,11 @@ const routes = [{
 const navList = [{
   path: '/album',
   name: '我的相册',
-  component: album
 }, {
   path: '/articleList',
   name: '我的日志',
-  component: articleList
 }, {
   path: '/management',
   name: '管理中心',
-  component: management
 }];
 export { navList, routes };

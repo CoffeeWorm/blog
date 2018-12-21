@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import Modal from "./modal";
-import cache from "./cache";
+import Modal from "@/components/modal";
+
 export default {
   components: { Modal },
   methods: {
@@ -72,7 +72,7 @@ export default {
       .get("/api/photo/getList", {
         params: {
           page: 1,
-          pageSize: 10
+          pageSize: 6
         }
       })
       .then(res => {

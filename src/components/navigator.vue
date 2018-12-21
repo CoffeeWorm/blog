@@ -4,7 +4,7 @@
       <span class="logo">Coffee_Worm</span>
     </div>
     <ul class="f-fr f-pr">
-      <li v-for="(it, index ) in navList" class="item active" :key="it.path" ref="j-navitem" @mouseover="onMousrHover(index)" @mouseout="onMousrLeave()">
+      <li v-for="(it, index ) in navList" class="item active" :key="it.path" ref="j-navitem" @mouseover="onMouseHover(index)" @mouseout="onMousrLeave()">
         <router-link :to="it.path">{{it.name}}</router-link>
       </li>
       <li class="decoratebar f-pa" :style="{width:barWidth+'px',left:barLeft+'px'}"></li>
@@ -19,10 +19,10 @@ export default {
   props: {
     navList : {
       type: Array,
-      default: () => ({
+      default: () => ([{
         path: '',
         name: ''
-      })
+      }])
     }
   },
   data: () => {
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     onMousrLeave() {
-      if (this.active === -1) {
+      if (!~this.active) {
         this.barWidth = 0;
         this.barLeft = 0;
       } else {
@@ -43,16 +43,17 @@ export default {
       }
     },
     setDefault(to) {
+      let index = -1;
       for (let i = this.navList.length - 1; i >= 0; i--) {
         if (new RegExp(this.navList[i].path).test(to || location.hash)) {
-          this.active = i;
-          return;
+          index = i;
+          break;
         }
       }
-      this.active = -1;
+      this.active = index;
       this.onMousrLeave();
     },
-    onMousrHover(index) {
+    onMouseHover(index) {
       this.barWidth = this.navList[index].width;
       this.barLeft = this.navList[index].left;
     }
@@ -63,7 +64,6 @@ export default {
       this.navList[i].left = this.$refs['j-navitem'][i].offsetLeft;
     }
     this.setDefault();
-    this.onMousrLeave();
     event.$on('routerupdate', this.setDefault.bind(this));
   }
 };
@@ -93,6 +93,7 @@ export default {
   font-family: 'Microsoft YaHei';
   line-height: 50px;
   text-decoration: none;
+  list-style-type: none;
 }
 .m-nav .item + .item {
   margin-left: 30px;

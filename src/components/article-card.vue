@@ -1,24 +1,37 @@
 <template>
   <div class="m-article f-cf">
     <p class="title">
-      <a :href="path" target="_self">
+      <router-link :to="{path: '/article', query: { id }}">
         <span class="top" v-show="isAd">[推广]</span>
         <span class="top" v-show="isTop">[顶]</span>
         {{title}}
-      </a>
+      </router-link>
     </p>
     <p class="intro">
       {{intro}}
-      <a class="more" href="#" target="_self">More...</a>
+      <router-link :to="{path: '/article', query: { id }}">More</router-link>
     </p>
     <div class="info">
       <span class="time">{{createTime|time}}</span>
+      <span v-if="isLogin"><a class="delete" @click.stop="ondel">删除</a></span>
     </div>
   </div>
 </template>
-<script>
+<script> 
 export default {
-  props: ['title', 'intro', 'createTime', 'views', 'id', 'isTop', 'isAd', 'path']
+  props: ['title', 'intro', 'createTime', 'views', 'id', 'isTop', 'isAd', 'path'],
+  computed: {
+    isLogin(){
+      return this.$store.state.isLogin;
+    }
+  },
+  methods: {
+    ondel(){
+      this.$cache.delete('/api/article/delete', {params: {
+        id: this.id
+      }});
+    }
+  }
 };
 </script>
 
@@ -52,8 +65,8 @@ export default {
   text-indent: 2em;
   line-height: 1.4;
 }
-.m-article .intro .more{
-  font-size: 14px;
+.m-article .intro .more:hover {
+  color: rgb(255, 133, 0);
 }
 .m-article .info {
   float: right;
@@ -62,5 +75,8 @@ export default {
 }
 .m-article .info span {
   margin-left: 20px;
+}
+.m-article .info .delete {
+  cursor: pointer;
 }
 </style>

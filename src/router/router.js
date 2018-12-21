@@ -8,6 +8,7 @@ Vue.use(Router);
 let router = new Router({routes});
 
 router.beforeEach((to, from, next) => {
+  // debugger
   //严格限制权限
   let obj = routes.find((item) => {
     return item.path === to.path;
