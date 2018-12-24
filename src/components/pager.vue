@@ -1,18 +1,35 @@
 <template>
-  <ol class="m-pager f-cf" @click.stop="go($event)">
-    <li class="page previous" :class="{'z-disable': cur <= 1}">&lt;上一页</li>
+  <ol @click.stop="go($event)" class="m-pager f-cf">
+    <li :class="{'z-disable': cur <= 1}" class="page previous">&lt;上一页</li>
 
-    <li class="page" v-for="val in size" v-if="beforeCondition(val)" :data-val="beforeVal(val)" :key="val">{{beforeVal(val)}}</li>
+    <li
+      :data-val="beforeVal(val)"
+      :key="val"
+      class="page"
+      v-for="val in size"
+      v-if="beforeCondition(val)"
+    >{{beforeVal(val)}}</li>
 
-    <li class="page z-active" :data-val="cur">{{cur}}</li>
+    <li :data-val="cur" class="page z-active">{{cur}}</li>
 
-    <li class="page" v-for="val in size" v-if="afterCondition(val)" :data-val="afterVal(val)" :key="val">{{afterVal(val)}}</li>
+    <li
+      :data-val="afterVal(val)"
+      :key="val"
+      class="page"
+      v-for="val in size"
+      v-if="afterCondition(val)"
+    >{{afterVal(val)}}</li>
 
-    <li class="page next" :class="{'z-disable': cur >= tot}">下一页&gt;</li>
+    <li :class="{'z-disable': cur >= tot}" class="page next">下一页&gt;</li>
     <li class="intro">
       共{{tot}}页，
-      <form class="jump_form" @submit.prevent="jump2target(target)" @click.stop="()=>{}">
-        到第<input class="jump_input" type="text" v-model="target">页
+      <form
+        @click.stop="()=>{}"
+        @submit.prevent="jump2target(target)"
+        class="jump_form"
+      >
+        到第
+        <input class="jump_input" type="text" v-model="target">页
         <button class="jump_btn" type="submit">确定</button>
       </form>
     </li>

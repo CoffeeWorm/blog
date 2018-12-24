@@ -1,5 +1,5 @@
 <template>
-  <div class="f-full" @click="clickHanlder($event)">
+  <div @click="clickHanlder($event)" class="f-full">
     <div class="m-modal">
       <i class="fa fa-times"></i>
       <p class="title" v-if="title">{{title}}</p>
@@ -9,7 +9,13 @@
       <div class="btnaera" v-if="know || close || customBtn">
         <button class="u-btn know" v-if="know">{{know}}</button>
         <button class="u-btn close" v-if="close">{{close}}</button>
-        <button class="u-btn" v-for="item in customBtn" :key="item.content" v-if="customBtn" @click.stop="item.event">{{item.content}}</button>
+        <button
+          :key="item.content"
+          @click.stop="item.event"
+          class="u-btn"
+          v-for="item in customBtn"
+          v-if="customBtn"
+        >{{item.content}}</button>
       </div>
     </div>
   </div>
@@ -26,9 +32,6 @@ export default {
     },
     customBtn: {
       default: () => []
-    },
-    content: {
-      default: ''
     },
     title: {
       default: ''

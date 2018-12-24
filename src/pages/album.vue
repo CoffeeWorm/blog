@@ -1,7 +1,7 @@
 <template>
-  <div class="m-album f-cf" @click.stop="showDetail($event)">
-    <div class="item f-lazy" v-for="item in albumList" :key="item.id">
-      <img class="img" :src="item.path" :data-id="item.id">
+  <div @click.stop="showDetail($event)" class="m-album f-cf">
+    <div :key="item.id" class="item f-lazy" v-for="item in albumList">
+      <img :data-id="item.id" :src="item.path" class="img">
       <div class="layer">
         <div class="intro">
           <p class="location">Shot in {{item.location}}</p>
@@ -9,12 +9,12 @@
           <p class="date">{{item.date | time}}</p>
         </div>
       </div>
-      <div class="cover" :data-id="item.id"></div>
+      <div :data-id="item.id" class="cover"></div>
     </div>
-    <Modal class="modal" v-if="showImg" @onclose="modalClose" v-bind="params">
+    <Modal @onclose="modalClose" class="modal" v-bind="params" v-if="showImg">
       <div @click.stop="switchImg($event)">
         <i class="fa fa-angle-left"></i>
-        <img class="detail" :src="albumList[currentImdIndex].path">
+        <img :src="albumList[currentImdIndex].path" class="detail">
         <i class="fa fa-angle-right"></i>
       </div>
     </Modal>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Modal from "@/components/modal";
+import Modal from '@/components/modal';
 
 export default {
   components: { Modal },
@@ -30,8 +30,8 @@ export default {
     showDetail(e) {
       let target = e.target;
       switch (target.className) {
-        case "cover":
-          let id = target.getAttribute("data-id");
+        case 'cover':
+          let id = target.getAttribute('data-id');
           this.currentImdIndex = this.findindex(id);
           this.showImg = true;
           break;
@@ -56,10 +56,10 @@ export default {
         this.currentImdIndex = index;
       };
       switch (target.className) {
-        case "fa fa-angle-right":
+        case 'fa fa-angle-right':
           jump(+1);
           break;
-        case "fa fa-angle-left":
+        case 'fa fa-angle-left':
           jump(-1);
           break;
         default:
@@ -69,7 +69,7 @@ export default {
   },
   mounted() {
     this.$cache
-      .get("/api/photo/getList", {
+      .get('/api/photo/getList', {
         params: {
           page: 1,
           pageSize: 6
@@ -81,7 +81,7 @@ export default {
   },
   data() {
     return {
-      currentImdIndex: "",
+      currentImdIndex: '',
       manager: !1,
       showImg: !1,
       params: {

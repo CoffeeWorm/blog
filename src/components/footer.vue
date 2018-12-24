@@ -1,7 +1,8 @@
 <template>
-  <footer class="g-footer" ref="j-footer">
-    Coffee_Worm&copy; All right reserved.
-  </footer>
+  <footer
+    class="g-footer"
+    ref="j-footer"
+  >生命不息，编程不止。Coffee_Worm&copy; All right reserved.</footer>
 </template>
 
 <script>

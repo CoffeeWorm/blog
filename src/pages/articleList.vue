@@ -1,15 +1,25 @@
 <template>
   <div class="m-articlelist">
-    <ArticleCard class="articlecard" v-for="item in articleAdList" :key="item.id" v-bind="item"></ArticleCard>
-    <ArticleCard class="articlecard" v-for="item in articleTopList" :key="item.id" v-bind="item"></ArticleCard>
-    <ArticleCard class="articlecard" v-for="item in articleList" :key="item.id" v-bind="item"></ArticleCard>
-    <Pager class="pager" @pagechange="loadPage($event)" :current="current" :total="totalPages"></Pager>
+    <!-- <ArticleCard class="articlecard" v-for="item in articleAdList" :key="item.id" v-bind="item"></ArticleCard>
+    <ArticleCard class="articlecard" v-for="item in articleTopList" :key="item.id" v-bind="item"></ArticleCard>-->
+    <ArticleCard
+      :key="item.id"
+      class="articlecard"
+      v-bind="item"
+      v-for="item in articleList"
+    ></ArticleCard>
+    <Pager
+      :current="current"
+      :total="totalPages"
+      @pagechange="loadPage($event)"
+      class="pager"
+    ></Pager>
   </div>
 </template>
 
 <script>
-import Pager from "@/components/pager";
-import ArticleCard from "@/components/article-card";
+import Pager from '@/components/pager';
+import ArticleCard from '@/components/article-card';
 
 export default {
   components: { Pager, ArticleCard },
@@ -18,7 +28,7 @@ export default {
       this.current = e.to || this.current;
 
       this.$cache
-        .get("/api/article/getList", {
+        .get('/api/article/getList', {
           params: {
             page: this.current,
             pageSize: this.pageSize
@@ -27,7 +37,6 @@ export default {
         .then(res => {
           this.articleList = res.list;
           this.totalPages = Math.ceil(res.total / this.pageSize);
-
         });
     }
   },
@@ -41,12 +50,12 @@ export default {
     this.loadPage();
   },
   data: () => ({
-      current: 1,
-      pageSize: 10,
-      totalPages: 1,
-      articleAdList: [],
-      articleTopList: [],
-      articleList: []
+    current: 1,
+    pageSize: 10,
+    totalPages: 1,
+    articleAdList: [],
+    articleTopList: [],
+    articleList: []
   })
 };
 </script>

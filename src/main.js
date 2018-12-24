@@ -10,7 +10,7 @@ import { debug } from 'util';
 Vue.prototype.$cache = cache;
 Vue.config.productionTip = false;
 
-Vue.filter('time', (val= +new Date(), template = 'yyyy-MM-dd hh:mm') => {
+Vue.filter('time', (val = +new Date(), template = 'yyyy-MM-dd hh:mm') => {
   let stamp = new Date(+val);
   let map = { y: /y+/, M: /M+/, d: /d+/, h: /h+/, m: /m+/, s: /s+/ };
   let timer = {

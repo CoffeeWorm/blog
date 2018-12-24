@@ -1,14 +1,15 @@
 <template>
   <div class="m-comtentbox f-pr">
-    <div class="title" v-if="showTitle" :class="{'z-toggled': isToggled}" @click.stop="switcher">
-      <slot name="title">
-
-      </slot>
+    <div
+      :class="{'z-toggled': isToggled}"
+      @click.stop="switcher"
+      class="title"
+      v-if="showTitle"
+    >
+      <slot name="title"></slot>
     </div>
-    <div class="content" :class="{'z-toggled': isToggled}">
-      <slot name="content">
-
-      </slot>
+    <div :class="{'z-toggled': isToggled}" class="content">
+      <slot name="content"></slot>
     </div>
   </div>
 </template>

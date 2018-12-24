@@ -7,13 +7,13 @@
         {{info.title}}
       </h1>
       <h1 class="title" v-else>
-        <input type="text" name="title" v-model="info.title">
+        <input name="title" type="text" v-model="info.title">
       </h1>
     </section>
     <section class="wrap ql-editor">
       <div class="content" v-html="info.content" v-if="!edit"></div>
       <div class="content" v-else>
-        <quillEditor v-model="info.content" :options="options"></quillEditor>
+        <quillEditor :options="options" v-model="info.content"></quillEditor>
       </div>
     </section>
     <section class="wrap inscription f-cf">
@@ -24,27 +24,31 @@
     <section class="wrap" v-if="isLogin">
       <div class="group" v-if="edit">
         <label class="input-group">
-          <input type="checkbox" name="ad" v-model="info.isAd">
+          <input name="ad" type="checkbox" v-model="info.isAd">
           推广
         </label>
         <label class="input-group">
-          <input type="checkbox" name="top" v-model="info.isTop">
+          <input name="top" type="checkbox" v-model="info.isTop">
           置顶
         </label>
       </div>
       <div class="group">
-        <button class="change u-btn" @click.stop="onmodify($event)" v-if="!edit">修改</button>
-        <button class="change u-btn" @click.stop="onsave($event)" v-else>保存</button>
+        <button
+          @click.stop="onmodify($event)"
+          class="change u-btn"
+          v-if="!edit"
+        >修改</button>
+        <button @click.stop="onsave($event)" class="change u-btn" v-else>保存</button>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { quillEditor } from "vue-quill-editor";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
+import { quillEditor } from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 export default {
   components: { quillEditor },
   computed: {
@@ -56,7 +60,7 @@ export default {
     let id = this.$route.query.id;
     !id && this.$router.replace('/404');
     this.$cache
-      .get(`/api/article/content`, {
+      .get('/api/article/content', {
         params: {
           id
         }
@@ -76,7 +80,7 @@ export default {
     },
     edit: false,
     options: {
-      placeholder: "在这里输入内容..."
+      placeholder: '在这里输入内容...'
     }
   }),
   methods: {

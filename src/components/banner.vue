@@ -1,19 +1,31 @@
 <template>
-  <div class="m-banner f-cb" @click.stop="clickHandler($event)" @mouseover.stop="stop" @mouseout.stop="play">
+  <div
+    @click.stop="clickHandler($event)"
+    @mouseout.stop="play"
+    @mouseover.stop="stop"
+    class="m-banner f-cb"
+  >
     <ul class="imglist">
-      <li class="item" 
-        v-for="(img, idx) in imgList" 
-        :class="{'z-active': isCurrent(idx), movenextin: isNextIn(idx), movebackin: isBackIn(idx), movenextout: isNextOut(idx), movebackout: isBackOut(idx)}" 
-        :key="idx">
-        <img class="img" :src="img.path" :alt="img.name">
+      <li
+        :class="{'z-active': isCurrent(idx), movenextin: isNextIn(idx), movebackin: isBackIn(idx), movenextout: isNextOut(idx), movebackout: isBackOut(idx)}"
+        :key="idx"
+        class="item"
+        v-for="(img, idx) in imgList"
+      >
+        <img :alt="img.name" :src="img.path" class="img">
       </li>
     </ul>
     <i class="fa fa-angle-left left" ref="back"></i>
     <i class="fa fa-angle-right right" ref="next"></i>
     <ul class="pointers f-cb">
-      <li class="pointer" v-for="i in imgList.length" :key="i - 1" :class="{'z-active': isCurrent(i - 1)}">
-        <i class="fa fa-circle normal" :data-index="i - 1"></i>
-        <i class="fa fa-circle current" :data-index="i - 1"></i>
+      <li
+        :class="{'z-active': isCurrent(i - 1)}"
+        :key="i - 1"
+        class="pointer"
+        v-for="i in imgList.length"
+      >
+        <i :data-index="i - 1" class="fa fa-circle normal"></i>
+        <i :data-index="i - 1" class="fa fa-circle current"></i>
       </li>
     </ul>
   </div>
@@ -67,10 +79,10 @@ export default {
       this.dir = BACK;
     },
     jump(index) {
-      if(this.current > index) {
+      if (this.current > index) {
         this.back(index);
       }
-      if(this.current < index) {
+      if (this.current < index) {
         this.next(index);
       }
     },
@@ -240,6 +252,6 @@ export default {
 }
 .m-banner .left:hover,
 .m-banner .right:hover {
-  color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>

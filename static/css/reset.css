@@ -5,7 +5,7 @@ body {
 
 html {
   background-color: #f6f6f6;
-  font-family: "微软雅黑","Mircosoft YeHei";
+  font-family: '微软雅黑', 'Mircosoft YeHei';
 }
 
 ul,
@@ -115,8 +115,14 @@ i {
   border: 1px solid #333;
   border-radius: 3px;
   cursor: pointer;
+  user-select: none;
 }
-
+.u-btn.z-disable {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #999;
+  border-color: #999;
+}
 .u-btn:active {
   background-color: rgba(0, 0, 0, 0.2);
 }

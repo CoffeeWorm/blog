@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="errmsg">
-      <img class="img" src="@/assets/404.png" width="100%" alt="404">
+      <img alt="404" class="img" src="@/assets/404.png" width="100%">
     </div>
   </div>
 </template>

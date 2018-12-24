@@ -1,7 +1,5 @@
 <template>
-  <div class="m-photo-manager">
-    
-  </div>
+  <div class="m-photo-manager"></div>
 </template>
 
 <script>
@@ -10,5 +8,3 @@ export default {};
 
 <style scoped>
 </style>
-
-

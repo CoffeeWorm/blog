@@ -8,11 +8,15 @@
         <router-view></router-view>
       </div>
       <div class="g-siderbar">
-        <ToggleBox class="intro-box personalintro" :showTitle="!1" :toggleFunc="!1">
+        <ToggleBox
+          :showTitle="!1"
+          :toggleFunc="!1"
+          class="intro-box personalintro"
+        >
           <template slot="content">
             <div class="face f-cb">
               <div class="avatar">
-                <img class="avatar_img" :src="personalInfo.avatar" alt>
+                <img :src="personalInfo.avatar" alt class="avatar_img">
               </div>
             </div>
             <div class="content">
@@ -34,7 +38,11 @@
           </p>
           <template slot="content">
             <ul>
-              <li class="recommend f-oh" v-for="rec in recList" :key="rec.title">
+              <li
+                :key="rec.title"
+                class="recommend f-oh"
+                v-for="rec in recList"
+              >
                 <a :href="rec.src">{{rec.title}}</a>
               </li>
             </ul>
@@ -46,30 +54,31 @@
             <i class="fa fa-camera"></i> 相册照片
           </p>
           <template slot="content">
-            <Banner class="banner" :imgList="imgList"></Banner>
+            <Banner :imgList="imgList" class="banner"></Banner>
           </template>
         </ToggleBox>
       </div>
     </div>
     <Footer></Footer>
+    <msgQueque></msgQueque>
   </div>
 </template>
 <script>
-import Navigator from "./components/navigator";
-import Footer from "./components/footer";
-import { navList } from "./router/config";
-import ToggleBox from "@/components/togglebox";
-import Banner from "@/components/banner";
-import cache from "./components/cache";
+import Navigator from '@/components/navigator';
+import Footer from '@/components/footer';
+import { navList } from '@/router/config';
+import ToggleBox from '@/components/togglebox';
+import Banner from '@/components/banner';
+import msgQueque from '@/components/msgqueque';
 export default {
-  name: "App",
-  components: { Navigator, Footer, ToggleBox, Banner },
+  name: 'App',
+  components: { Navigator, Footer, ToggleBox, Banner, msgQueque },
   mounted() {
-    cache.get("/api/user/info").then(res => {
+    this.$cache.get('/api/user/info').then(res => {
       this.personalInfo = res;
     });
-    cache
-      .get("/api/photo/getList", {
+    this.$cache
+      .get('/api/photo/getList', {
         params: {
           page: 1,
           pageSize: 5,
@@ -82,26 +91,26 @@ export default {
   },
   data: () => {
     return {
-      title: "This is title",
+      title: 'This is title',
       personalInfo: {},
       navList: navList,
       recList: [
         {
-          title: "Git命令速查表",
-          src: ""
+          title: 'Git命令速查表',
+          src: ''
         },
         {
-          title: "Git版本回退详解",
-          src: ""
+          title: 'Git版本回退详解',
+          src: ''
         },
         {
-          title: "RegExp正则表达式速查表",
-          src: ""
+          title: 'RegExp正则表达式速查表',
+          src: ''
         }
       ],
       imgList: []
     };
-  },
+  }
 };
 </script>
 

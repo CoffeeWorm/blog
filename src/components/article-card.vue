@@ -13,23 +13,36 @@
     </p>
     <div class="info">
       <span class="time">{{createTime|time}}</span>
-      <span v-if="isLogin"><a class="delete" @click.stop="ondel">删除</a></span>
+      <span v-if="isLogin">
+        <a @click.stop="ondel" class="delete">删除</a>
+      </span>
     </div>
   </div>
 </template>
-<script> 
+<script>
 export default {
-  props: ['title', 'intro', 'createTime', 'views', 'id', 'isTop', 'isAd', 'path'],
+  props: [
+    'title',
+    'intro',
+    'createTime',
+    'views',
+    'id',
+    'isTop',
+    'isAd',
+    'path'
+  ],
   computed: {
-    isLogin(){
+    isLogin() {
       return this.$store.state.isLogin;
     }
   },
   methods: {
-    ondel(){
-      this.$cache.delete('/api/article/delete', {params: {
-        id: this.id
-      }});
+    ondel() {
+      this.$cache.delete('/api/article/delete', {
+        params: {
+          id: this.id
+        }
+      });
     }
   }
 };
@@ -43,7 +56,6 @@ export default {
   border-radius: 3px;
   text-align: left;
 }
-
 .m-article .title {
   font-size: 18px;
   font-weight: bold;

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    {{abc}}
-  </div>
+  <div>{{abc}}</div>
 </template>
 
 <script>
