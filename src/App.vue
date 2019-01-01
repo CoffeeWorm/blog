@@ -69,7 +69,7 @@ import Footer from '@/components/footer';
 import { navList } from '@/router/config';
 import ToggleBox from '@/components/togglebox';
 import Banner from '@/components/banner';
-import msgQueque from '@/components/msgqueque';
+import msgQueque from '@/components/msg-queque';
 export default {
   name: 'App',
   components: { Navigator, Footer, ToggleBox, Banner, msgQueque },
